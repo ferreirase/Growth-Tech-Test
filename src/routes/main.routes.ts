@@ -4,7 +4,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { Router } from 'express';
-import axios from 'axios';
+import GetUsersService from '../services/getUsersService';
+import GetPostsService from '../services/getPostsService';
 
 interface Post {
   userId: number;
@@ -33,32 +34,18 @@ interface User {
 const usersRouter = Router();
 
 usersRouter.get('/', async (_req, res) => {
-  // buscando todos os usuários na API
-  const allUsers = await axios.get(
-    'https://jsonplaceholder.typicode.com/users',
-  );
-
-  // filtrando os usuários por empresas que pertencem à um grupo
-  const filteredUsers = allUsers.data.filter((user: User) =>
-    user.company.name.includes('Group'),
-  );
-
-  // buscando todos os posts na API
-  const responsePosts = await axios.get(
-    'https://jsonplaceholder.typicode.com/posts',
-  );
-
-  const allPosts = responsePosts.data;
+  const users = await GetUsersService();
+  const posts = await GetPostsService();
 
   // filtrando posts por usuários em que as empresas pertencem à um grupo
-  const filteredPosts: Array<any> = filteredUsers.map((user: User) => {
+  const usersPosts: Array<any> = users.map((user: User) => {
     return {
       user,
-      posts: allPosts.filter((post: Post) => post.userId === user.id),
+      posts: posts.filter((post: Post) => post.userId === user.id),
     };
   });
 
-  return res.status(200).json(filteredPosts);
+  return res.status(200).json(usersPosts);
 });
 
 export default usersRouter;
