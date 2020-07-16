@@ -26,7 +26,10 @@
 		"typescript": "^3.9.3"
 	},
 	"scripts": {
-		"build": "tsc",
+    "build": "npx typescript",
+    "start": "node build/server.js",
+    "build:watch": "npx typescript -w",
+    "dev:watch": "npx concurrently \"npm run build:watch\" \"npm run dev:run\"",
 		"dev:server": "ts-node-dev --inspect --transpileOnly --ignore-watch node_modules src/server.ts"
 	}
 }
