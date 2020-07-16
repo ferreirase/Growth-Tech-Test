@@ -1,0 +1,24 @@
+.iconBack{
+  position: absolute;
+  left: 33px;
+  top: 120px;
+}
+
+.iconBack:hover {
+  color: #3b94ec;
+  cursor: pointer;
+}
+
+.containerPosts{
+  position: relative;
+  top: 0px;
+  height: 100vh;
+}
+
+.companyName {
+  position: relative;
+  max-width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  top: 20px;
+}
